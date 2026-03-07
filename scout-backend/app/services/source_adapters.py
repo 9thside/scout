@@ -93,6 +93,106 @@ class MockSourceAdapter(SourceAdapter):
     DETAILS = ["with Fur Trim", "Water-Resistant", "Made in Italy", "Japanese Selvedge", "Hand-Stitched", "Organic", "Recycled", "Gore-Tex", "Titanium Case", "Swiss Movement"]
     CONDITIONS = ["new", "new", "new", "new", "used", "refurbished"]  # Weighted toward new
 
+    # Real product images from picsum.photos (reliable placeholder service)
+    CATEGORY_IMAGES = {
+        "Outerwear": [
+            "https://images.unsplash.com/photo-1544923246-77307dd270cb?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1608063615781-e2ef8c73d114?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1548883354-94bcfe321cbb?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1557418669-b85a26e4437c?w=400&h=400&fit=crop",
+        ],
+        "Shoes": [
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400&h=400&fit=crop",
+        ],
+        "Furniture": [
+            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&h=400&fit=crop",
+        ],
+        "Watches": [
+            "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1587925358603-c2eea5305bbc?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400&h=400&fit=crop",
+        ],
+        "Bags": [
+            "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1547949003-9571a8d1e6cc?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1622560480654-d96214fdc887?w=400&h=400&fit=crop",
+        ],
+        "Electronics": [
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1546868871-af0de0ae72be?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=400&h=400&fit=crop",
+        ],
+        "Home Decor": [
+            "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400&h=400&fit=crop",
+        ],
+        "General": [
+            "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1434389677669-e08b4cda3a06?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400&h=400&fit=crop",
+        ],
+    }
+
+    # Real retailer product URL patterns
+    SOURCE_URLS = {
+        "Nordstrom": "https://www.nordstrom.com/s/search/{slug}",
+        "SSENSE": "https://www.ssense.com/en-us/search?q={query}",
+        "Mr Porter": "https://www.mrporter.com/en-us/mens/search?query={query}",
+        "END.": "https://www.endclothing.com/us/catalogsearch/result/?q={query}",
+        "Grailed": "https://www.grailed.com/shop?query={query}",
+        "eBay": "https://www.ebay.com/sch/i.html?_nkw={query}",
+        "Farfetch": "https://www.farfetch.com/shopping/men/search/items.aspx?q={query}",
+        "Net-a-Porter": "https://www.net-a-porter.com/en-us/shop/search/{query}",
+        "Shopbop": "https://www.shopbop.com/s?searchterm={query}",
+        "Matches Fashion": "https://www.matchesfashion.com/us/search?q={query}",
+        "The RealReal": "https://www.therealreal.com/search?q={query}",
+        "Vestiaire Collective": "https://www.vestiairecollective.com/search/?q={query}",
+    }
+
     def search(self, query: str, category: Optional[str] = None, **kwargs) -> List[dict]:
         """Generate mock products matching the query."""
         cat = category or "General"
@@ -134,10 +234,14 @@ class MockSourceAdapter(SourceAdapter):
             # Generate fingerprint for dedup
             fingerprint = hashlib.md5(f"{title}:{source}:{price}".encode()).hexdigest()
 
-            # Generate realistic image URLs (placeholder)
-            image_url = f"https://images.unsplash.com/photo-{random.randint(1500000000, 1700000000)}-{hashlib.md5(title.encode()).hexdigest()[:12]}?w=400&h=400&fit=crop"
+            # Use real category-appropriate images from Unsplash
+            cat_images = self.CATEGORY_IMAGES.get(cat, self.CATEGORY_IMAGES["General"])
+            image_url = cat_images[random.randint(0, len(cat_images) - 1)]
 
-            product_url = f"https://{source.lower().replace(' ', '').replace('.', '')}.com/product/{hashlib.md5(title.encode()).hexdigest()[:8]}"
+            # Generate working search URLs on real retailer sites
+            search_query = title.replace(" ", "+")
+            url_template = self.SOURCE_URLS.get(source, "https://www.google.com/search?q={query}")
+            product_url = url_template.format(query=search_query, slug=title.lower().replace(" ", "-"))
 
             products.append({
                 "title": title,
