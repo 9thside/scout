@@ -195,8 +195,12 @@ def _handle_existing_product(db: Session, existing: Product, raw: dict, search: 
     new_availability = raw.get("availability", "in_stock")
     old_availability = existing.availability
 
-    # Update last seen
+    # Update last seen and refresh image/product URLs
     existing.last_seen_at = datetime.datetime.utcnow()
+    if raw.get("image_url"):
+        existing.image_url = raw["image_url"]
+    if raw.get("product_url"):
+        existing.product_url = raw["product_url"]
 
     # Check for price drop
     if new_price is not None and old_price is not None and new_price < old_price:
