@@ -19,11 +19,11 @@ import {
   ShoppingCart,
 } from "lucide-react";
 
-const ALERT_TYPE_CONFIG: Record<string, { icon: typeof Bell; color: string; bg: string; label: string }> = {
-  new_match: { icon: Sparkles, color: "text-blue-700", bg: "bg-blue-50 border-blue-200", label: "New Find" },
-  price_drop: { icon: TrendingDown, color: "text-green-700", bg: "bg-green-50 border-green-200", label: "Price Drop" },
-  sale: { icon: Tag, color: "text-orange-700", bg: "bg-orange-50 border-orange-200", label: "On Sale" },
-  restock: { icon: RotateCcw, color: "text-purple-700", bg: "bg-purple-50 border-purple-200", label: "Back in Stock" },
+const ALERT_TYPE_CONFIG: Record<string, { icon: typeof Bell; color: string; bg: string; label: string; accent: string }> = {
+  new_match: { icon: Sparkles, color: "text-blue-700", bg: "bg-blue-50 border-blue-200", label: "New Find", accent: "border-l-blue-500" },
+  price_drop: { icon: TrendingDown, color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", label: "Price Drop", accent: "border-l-emerald-500" },
+  sale: { icon: Tag, color: "text-amber-700", bg: "bg-amber-50 border-amber-200", label: "On Sale", accent: "border-l-amber-500" },
+  restock: { icon: RotateCcw, color: "text-violet-700", bg: "bg-violet-50 border-violet-200", label: "Back in Stock", accent: "border-l-violet-500" },
 };
 
 function timeAgo(dateStr: string) {
@@ -132,11 +132,13 @@ export default function Alerts() {
       {/* Alert List */}
       {alerts.length === 0 ? (
         <Card className="border-zinc-200/80 shadow-sm">
-          <CardContent className="flex flex-col items-center py-16">
-            <Bell className="mb-4 h-10 w-10 text-zinc-300" />
-            <p className="text-sm font-medium text-zinc-900">No alerts yet</p>
-            <p className="mt-1 text-xs text-zinc-500">
-              Scout will notify you when something worth seeing comes up
+          <CardContent className="flex flex-col items-center py-20">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100">
+              <Bell className="h-6 w-6 text-zinc-400" />
+            </div>
+            <p className="text-base font-medium text-zinc-900">You're all caught up</p>
+            <p className="mt-1.5 max-w-sm text-center text-sm text-zinc-500">
+              When Scout finds new items, price drops, sales, or restocks matching your searches, they'll appear here
             </p>
           </CardContent>
         </Card>
@@ -148,7 +150,7 @@ export default function Alerts() {
             return (
               <Card
                 key={alert.id}
-                className={`border-zinc-200/80 shadow-sm transition-colors ${
+                className={`border-l-4 border-zinc-200/80 shadow-sm transition-colors ${config.accent} ${
                   !alert.is_read ? "bg-zinc-50/80" : ""
                 }`}
               >

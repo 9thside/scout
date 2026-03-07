@@ -14,13 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Inbox as InboxIcon,
   ExternalLink,
   Heart,
   X,
-  ShoppingCart,
+  ShoppingBag,
   Search,
   Filter,
+  Zap,
+  Plus,
 } from "lucide-react";
 
 export default function Inbox() {
@@ -126,12 +127,19 @@ export default function Inbox() {
         </div>
       ) : products.length === 0 ? (
         <Card className="border-zinc-200/80 shadow-sm">
-          <CardContent className="flex flex-col items-center py-16">
-            <InboxIcon className="mb-4 h-10 w-10 text-zinc-300" />
-            <p className="text-sm font-medium text-zinc-900">Nothing here yet</p>
-            <p className="mt-1 text-xs text-zinc-500">
-              Run a search and Scout will start filling your inbox with finds
+          <CardContent className="flex flex-col items-center py-20">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100">
+              <ShoppingBag className="h-6 w-6 text-zinc-400" />
+            </div>
+            <p className="text-base font-medium text-zinc-900">Your discoveries will appear here</p>
+            <p className="mt-1.5 max-w-sm text-center text-sm text-zinc-500">
+              Create a search and run a scan — Scout will find items across the web and show you the best matches
             </p>
+            <a href="/searches/new" className="mt-4">
+              <Button size="sm" className="gap-1.5">
+                <Plus className="h-3.5 w-3.5" />Create a search
+              </Button>
+            </a>
           </CardContent>
         </Card>
       ) : (
@@ -146,19 +154,19 @@ export default function Inbox() {
                   <img
                     src={product.image_url}
                     alt={product.title}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = "none";
                     }}
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center">
-                    <ShoppingCart className="h-8 w-8 text-zinc-300" />
+                    <ShoppingBag className="h-8 w-8 text-zinc-300" />
                   </div>
                 )}
                 {product.is_on_sale && (
-                  <Badge className="absolute left-2 top-2 bg-green-500 text-white text-xs">
-                    {product.discount_percent ? `${product.discount_percent.toFixed(0)}% OFF` : "SALE"}
+                  <Badge className="absolute left-2.5 top-2.5 bg-emerald-500 text-white text-xs shadow-sm">
+                    {product.discount_percent ? `${product.discount_percent.toFixed(0)}% off` : "Sale"}
                   </Badge>
                 )}
                 {/* Hover Actions */}
@@ -181,24 +189,45 @@ export default function Inbox() {
                   </Button>
                 </div>
               </div>
-              <CardContent className="p-3">
+              <CardContent className="p-3.5">
                 <p className="truncate text-sm font-medium text-zinc-900">
                   {product.title}
                 </p>
-                <p className="text-xs text-zinc-500">
+                <p className="mt-0.5 text-xs text-zinc-500">
                   {product.brand}{product.source ? ` · ${product.source}` : ""}
                 </p>
+                <div className="mt-2 flex items-center gap-2">
+                  {product.price !== null && (
+                    <span className="text-sm font-semibold text-zinc-900">
+                      ${product.price.toFixed(0)}
+                    </span>
+                  )}
+                  {product.original_price && (
+                    <span className="text-xs text-zinc-400 line-through">
+                      ${product.original_price.toFixed(0)}
+                    </span>
+                  )}
+                </div>
+                {product.match_reason && (
+                  <div className="mt-2 flex items-start gap-1.5">
+                    <Zap className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />
+                    <p className="text-xs leading-relaxed text-zinc-500">{product.match_reason}</p>
+                  </div>
+                )}
                 <div className="mt-2 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {product.price !== null && (
-                      <span className="text-sm font-semibold text-zinc-900">
-                        ${product.price.toFixed(0)}
-                      </span>
+                  <div className="flex flex-wrap gap-1">
+                    {product.condition !== "new" && (
+                      <Badge variant="outline" className="text-xs">{product.condition}</Badge>
                     )}
-                    {product.original_price && (
-                      <span className="text-xs text-zinc-400 line-through">
-                        ${product.original_price.toFixed(0)}
-                      </span>
+                    {product.availability === "limited" && (
+                      <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700 text-xs">
+                        Limited
+                      </Badge>
+                    )}
+                    {product.availability === "out_of_stock" && (
+                      <Badge variant="outline" className="border-red-200 bg-red-50 text-red-700 text-xs">
+                        Sold Out
+                      </Badge>
                     )}
                   </div>
                   {product.product_url && (
@@ -207,21 +236,6 @@ export default function Inbox() {
                         <ExternalLink className="h-3.5 w-3.5" />
                       </Button>
                     </a>
-                  )}
-                </div>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {product.condition !== "new" && (
-                    <Badge variant="outline" className="text-xs">{product.condition}</Badge>
-                  )}
-                  {product.availability === "limited" && (
-                    <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700 text-xs">
-                      Limited
-                    </Badge>
-                  )}
-                  {product.availability === "out_of_stock" && (
-                    <Badge variant="outline" className="border-red-200 bg-red-50 text-red-700 text-xs">
-                      Out of Stock
-                    </Badge>
                   )}
                 </div>
               </CardContent>

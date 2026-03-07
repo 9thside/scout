@@ -58,11 +58,13 @@ export default function Activity() {
       {/* Activity List */}
       {logs.length === 0 ? (
         <Card className="border-zinc-200/80 shadow-sm">
-          <CardContent className="flex flex-col items-center py-16">
-            <ActivityIcon className="mb-4 h-10 w-10 text-zinc-300" />
-            <p className="text-sm font-medium text-zinc-900">No activity yet</p>
-            <p className="mt-1 text-xs text-zinc-500">
-              Run a search and its history will show up here
+          <CardContent className="flex flex-col items-center py-20">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100">
+              <ActivityIcon className="h-6 w-6 text-zinc-400" />
+            </div>
+            <p className="text-base font-medium text-zinc-900">No scan history yet</p>
+            <p className="mt-1.5 max-w-sm text-center text-sm text-zinc-500">
+              Every time Scout scans your searches, you'll see a record of what was found here
             </p>
           </CardContent>
         </Card>
@@ -72,7 +74,7 @@ export default function Activity() {
             <Card key={run.id} className="border-zinc-200/80 shadow-sm transition-shadow hover:shadow-md">
               <CardContent className="flex items-center gap-3 p-4">
                 {run.status === "success" ? (
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-green-500" />
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
                 ) : (
                   <AlertCircle className="h-5 w-5 shrink-0 text-amber-500" />
                 )}
@@ -123,7 +125,7 @@ export default function Activity() {
                   {run.price_drops > 0 && (
                     <Badge
                       variant="outline"
-                      className="bg-green-50 text-green-700 border-green-200 text-xs"
+                      className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs"
                     >
                       {run.price_drops} price drop{run.price_drops > 1 ? "s" : ""}
                     </Badge>
@@ -131,7 +133,7 @@ export default function Activity() {
                   {run.sales > 0 && (
                     <Badge
                       variant="outline"
-                      className="bg-orange-50 text-orange-700 border-orange-200 text-xs"
+                      className="bg-amber-50 text-amber-700 border-amber-200 text-xs"
                     >
                       {run.sales} sale{run.sales > 1 ? "s" : ""}
                     </Badge>
@@ -139,7 +141,7 @@ export default function Activity() {
                   {run.restocks > 0 && (
                     <Badge
                       variant="outline"
-                      className="bg-purple-50 text-purple-700 border-purple-200 text-xs"
+                      className="bg-violet-50 text-violet-700 border-violet-200 text-xs"
                     >
                       {run.restocks} restock{run.restocks > 1 ? "s" : ""}
                     </Badge>

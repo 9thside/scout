@@ -160,20 +160,22 @@ export default function Searches() {
       {/* Search List */}
       {filteredSearches.length === 0 ? (
         <Card className="border-zinc-200/80 shadow-sm">
-          <CardContent className="flex flex-col items-center justify-center py-16">
-            <Search className="mb-4 h-10 w-10 text-zinc-300" />
-            <p className="text-sm font-medium text-zinc-900">
-              {filter === "all" ? "No searches yet" : `No ${filter} searches`}
+          <CardContent className="flex flex-col items-center justify-center py-20">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-100">
+              <Search className="h-6 w-6 text-zinc-400" />
+            </div>
+            <p className="text-base font-medium text-zinc-900">
+              {filter === "all" ? "Tell Scout what to look for" : `No ${filter} searches`}
             </p>
-            <p className="mt-1 text-xs text-zinc-500">
+            <p className="mt-1.5 max-w-sm text-center text-sm text-zinc-500">
               {filter === "all"
-                ? "Create a search and Scout will start monitoring for you"
+                ? "Describe a product you want and Scout will continuously search the market for you"
                 : `You don't have any ${filter} searches right now`}
             </p>
             {filter === "all" && (
-              <Link to="/searches/new">
-                <Button variant="outline" size="sm" className="mt-4">
-                  <Plus className="mr-2 h-4 w-4" />
+              <Link to="/searches/new" className="mt-4">
+                <Button size="sm" className="gap-1.5">
+                  <Plus className="h-3.5 w-3.5" />
                   Create your first search
                 </Button>
               </Link>
@@ -206,7 +208,7 @@ export default function Searches() {
                       </Badge>
                       {search.last_run_status && (
                         search.last_run_status === "success" ? (
-                          <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-green-500" />
+                          <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
                         ) : (
                           <AlertCircle className="h-3.5 w-3.5 shrink-0 text-amber-500" />
                         )
@@ -247,7 +249,7 @@ export default function Searches() {
                       </p>
                       {search.last_checked_at && (
                         <p className="text-xs text-zinc-400">
-                          Checked {timeAgo(search.last_checked_at)}
+                          Scanned {timeAgo(search.last_checked_at)}
                         </p>
                       )}
                       {search.last_run_message && (

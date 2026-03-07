@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Sparkles } from "lucide-react";
 
 const DEFAULT_FORM: SavedSearchForm = {
   name: "",
@@ -164,12 +164,12 @@ export default function SearchForm() {
         </Button>
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
-            {isEdit ? "Edit search" : "Create a new search"}
+            {isEdit ? "Edit search" : "New search"}
           </h1>
           <p className="text-sm text-zinc-500">
             {isEdit
               ? "Fine-tune what Scout looks for"
-              : "Tell Scout what you want and it will keep searching for you"}
+              : "Describe what you're looking for and Scout will monitor the market for you"}
           </p>
         </div>
       </div>
@@ -178,7 +178,9 @@ export default function SearchForm() {
         {/* Basic Info */}
         <Card className="border-zinc-200/80 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-zinc-700">What are you looking for?</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-zinc-700">
+              <Sparkles className="h-4 w-4 text-zinc-400" />What are you looking for?
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -187,10 +189,11 @@ export default function SearchForm() {
                 id="name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="e.g., Winter Jacket, Loafers, Coffee Table"
+                placeholder="Winter Jacket, Loafers, Coffee Table..."
                 required
+                className="text-base"
               />
-              <p className="text-xs text-zinc-400">A short label so you can recognize this search later</p>
+              <p className="text-xs text-zinc-400">A short label you'll recognize later</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="query">Describe what you want</Label>
@@ -198,12 +201,13 @@ export default function SearchForm() {
                 id="query"
                 value={form.query}
                 onChange={(e) => setForm({ ...form, query: e.target.value })}
-                placeholder="e.g., black shiny puffer faux fur trim, relaxed fit selvedge denim"
+                placeholder="Black shiny puffer with faux fur trim, relaxed fit selvedge denim, walnut mid-century coffee table..."
                 required
-                rows={2}
+                rows={3}
+                className="text-base"
               />
               <p className="text-xs text-zinc-400">
-                Use natural language — be as specific as you like
+                Be as specific as you'd like — natural language works great
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -236,12 +240,12 @@ export default function SearchForm() {
         {/* Budget & Condition */}
         <Card className="border-zinc-200/80 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-zinc-700">Budget & condition</CardTitle>
+            <CardTitle className="text-sm font-medium text-zinc-700">Budget & Condition</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="space-y-2">
-                <Label>Budget Preference</Label>
+                <Label>Budget</Label>
                 <Select value={form.budget_preference} onValueChange={(v) => setForm({ ...form, budget_preference: v })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
@@ -252,7 +256,7 @@ export default function SearchForm() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="min_price">Min Price</Label>
+                <Label htmlFor="min_price">Min price</Label>
                 <Input
                   id="min_price"
                   type="number"
@@ -262,7 +266,7 @@ export default function SearchForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="max_price">Max Price</Label>
+                <Label htmlFor="max_price">Max price</Label>
                 <Input
                   id="max_price"
                   type="number"
@@ -289,7 +293,7 @@ export default function SearchForm() {
         {/* Brands */}
         <Card className="border-zinc-200/80 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-zinc-700">Brand preferences</CardTitle>
+            <CardTitle className="text-sm font-medium text-zinc-700">Brands</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -298,9 +302,9 @@ export default function SearchForm() {
                 id="preferred_brands"
                 value={form.preferred_brands}
                 onChange={(e) => setForm({ ...form, preferred_brands: e.target.value })}
-                placeholder="e.g., Nike, Adidas, Common Projects"
+                placeholder="Nike, Adidas, Common Projects..."
               />
-              <p className="text-xs text-zinc-400">Comma-separated list</p>
+              <p className="text-xs text-zinc-400">Separate with commas — these will be prioritized</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="excluded_brands">Brands to skip</Label>
@@ -308,9 +312,9 @@ export default function SearchForm() {
                 id="excluded_brands"
                 value={form.excluded_brands}
                 onChange={(e) => setForm({ ...form, excluded_brands: e.target.value })}
-                placeholder="e.g., Shein, Fashion Nova"
+                placeholder="Shein, Fashion Nova..."
               />
-              <p className="text-xs text-zinc-400">Comma-separated list</p>
+              <p className="text-xs text-zinc-400">Separate with commas — these will be excluded</p>
             </div>
           </CardContent>
         </Card>
@@ -318,12 +322,12 @@ export default function SearchForm() {
         {/* Size & Variants */}
         <Card className="border-zinc-200/80 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-zinc-700">Size & details</CardTitle>
+            <CardTitle className="text-sm font-medium text-zinc-700">Size & Details</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="space-y-2">
-                <Label htmlFor="clothing_size">Clothing Size</Label>
+                <Label htmlFor="clothing_size">Clothing size</Label>
                 <Input
                   id="clothing_size"
                   value={form.clothing_size}
@@ -332,7 +336,7 @@ export default function SearchForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="shoe_size">Shoe Size</Label>
+                <Label htmlFor="shoe_size">Shoe size</Label>
                 <Input
                   id="shoe_size"
                   value={form.shoe_size}
@@ -341,7 +345,7 @@ export default function SearchForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gender_fit">Gender / Fit</Label>
+                <Label htmlFor="gender_fit">Gender / fit</Label>
                 <Input
                   id="gender_fit"
                   value={form.gender_fit}
@@ -383,7 +387,7 @@ export default function SearchForm() {
         {/* Notification Settings */}
         <Card className="border-zinc-200/80 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium text-zinc-700">How should Scout notify you?</CardTitle>
+            <CardTitle className="text-sm font-medium text-zinc-700">Notifications</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
@@ -454,8 +458,8 @@ export default function SearchForm() {
             Cancel
           </Button>
           <Button type="submit" disabled={saving}>
-            <Save className="mr-2 h-4 w-4" />
-            {saving ? "Saving..." : isEdit ? "Save changes" : "Start searching"}
+            <Sparkles className="mr-2 h-4 w-4" />
+            {saving ? "Saving..." : isEdit ? "Save changes" : "Start monitoring"}
           </Button>
         </div>
       </form>

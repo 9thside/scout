@@ -163,26 +163,26 @@ export const CATEGORIES = [
 ] as const;
 
 export const STYLE_PROFILES = [
-  { value: "everyday", label: "Everyday" },
+  { value: "everyday", label: "Classic & Timeless" },
   { value: "trend-forward", label: "Trend-Forward" },
-  { value: "niche", label: "Niche / Enthusiast" },
-  { value: "premium-brand", label: "Premium Brand" },
-  { value: "designer", label: "Designer / Luxury" },
+  { value: "niche", label: "Niche & Curated" },
+  { value: "premium-brand", label: "Premium Brands" },
+  { value: "designer", label: "Designer & Luxury" },
   { value: "open", label: "Open to Anything" },
 ] as const;
 
 export const BUDGET_PREFERENCES = [
   { value: "any", label: "Any Budget" },
-  { value: "value", label: "Value" },
+  { value: "value", label: "Smart Value" },
   { value: "mid-range", label: "Mid-Range" },
   { value: "premium", label: "Premium" },
-  { value: "luxury", label: "Luxury" },
+  { value: "luxury", label: "Investment Pieces" },
 ] as const;
 
 export const CONDITIONS = [
-  { value: "new_only", label: "New Only" },
-  { value: "new_resale", label: "New + Resale" },
-  { value: "resale_only", label: "Resale Only" },
+  { value: "new_only", label: "Brand New" },
+  { value: "new_resale", label: "New & Pre-Owned" },
+  { value: "resale_only", label: "Pre-Owned Only" },
 ] as const;
 
 export const DIGEST_FREQUENCIES = [
@@ -193,6 +193,6 @@ export const DIGEST_FREQUENCIES = [
 
 export const SEARCH_FREQUENCIES = [
   { value: "1h", label: "Every Hour" },
-  { value: "6h", label: "Every 6 Hours" },
-  { value: "daily", label: "Once a Day" },
+  { value: "6h", label: "A Few Times a Day" },
+  { value: "daily", label: "Once Daily" },
 ] as const;

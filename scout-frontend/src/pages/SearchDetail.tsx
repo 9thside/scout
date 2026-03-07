@@ -16,7 +16,7 @@ import {
   ExternalLink,
   Heart,
   X,
-  ShoppingCart,
+  ShoppingBag,
   TrendingDown,
   Sparkles,
   Tag,
@@ -26,13 +26,14 @@ import {
   CheckCircle2,
   AlertCircle,
   Activity,
+  Zap,
 } from "lucide-react";
 
-const ALERT_ICONS: Record<string, typeof Bell> = {
-  new_match: Sparkles,
-  price_drop: TrendingDown,
-  sale: Tag,
-  restock: RotateCcw,
+const ALERT_TYPE_CONFIG: Record<string, { icon: typeof Bell; color: string; bg: string; label: string; accent: string }> = {
+  new_match: { icon: Sparkles, color: "text-blue-700", bg: "bg-blue-50 border-blue-200", label: "New Find", accent: "border-l-blue-500" },
+  price_drop: { icon: TrendingDown, color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", label: "Price Drop", accent: "border-l-emerald-500" },
+  sale: { icon: Tag, color: "text-amber-700", bg: "bg-amber-50 border-amber-200", label: "On Sale", accent: "border-l-amber-500" },
+  restock: { icon: RotateCcw, color: "text-violet-700", bg: "bg-violet-50 border-violet-200", label: "Back in Stock", accent: "border-l-violet-500" },
 };
 
 function timeAgo(dateStr: string) {
@@ -152,7 +153,7 @@ export default function SearchDetail() {
               </Badge>
               {search.last_run_status && (
                 search.last_run_status === "success" ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-500" />
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                 ) : (
                   <AlertCircle className="h-4 w-4 text-amber-500" />
                 )
@@ -232,44 +233,54 @@ export default function SearchDetail() {
         <TabsContent value="matches" className="mt-4">
           {matches.length === 0 ? (
             <Card className="border-zinc-200/80 shadow-sm">
-              <CardContent className="flex flex-col items-center py-12">
-                <Sparkles className="mb-3 h-8 w-8 text-zinc-300" />
-                <p className="text-sm text-zinc-500">Nothing found yet</p>
-                <p className="text-xs text-zinc-400">Run this search to discover products</p>
-                <Button variant="outline" size="sm" className="mt-4" onClick={handleRun}>
-                  <RefreshCw className="mr-2 h-4 w-4" />Scan now
+              <CardContent className="flex flex-col items-center py-16">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+                  <Sparkles className="h-5 w-5 text-zinc-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-900">No discoveries yet</p>
+                <p className="mt-1.5 max-w-xs text-center text-xs text-zinc-500">
+                  Hit "Scan now" and Scout will search the web for items matching your criteria
+                </p>
+                <Button size="sm" className="mt-4 gap-1.5" onClick={handleRun}>
+                  <RefreshCw className="h-3.5 w-3.5" />Scan now
                 </Button>
               </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {matches.map((product) => (
-                <Card key={product.id} className="overflow-hidden border-zinc-200/80 shadow-sm transition-shadow hover:shadow-md">
-                  <div className="aspect-square bg-zinc-100">
+                <Card key={product.id} className="group overflow-hidden border-zinc-200/80 shadow-sm transition-all hover:shadow-md">
+                  <div className="relative aspect-[4/3] bg-zinc-100">
                     {product.image_url ? (
                       <img
                         src={product.image_url}
                         alt={product.title}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.display = "none";
                         }}
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center">
-                        <ShoppingCart className="h-8 w-8 text-zinc-300" />
+                        <ShoppingBag className="h-8 w-8 text-zinc-300" />
                       </div>
                     )}
+                    {product.is_on_sale && (
+                      <Badge className="absolute left-2.5 top-2.5 bg-emerald-500 text-white text-xs shadow-sm">
+                        {product.discount_percent ? `${product.discount_percent.toFixed(0)}% off` : "Sale"}
+                      </Badge>
+                    )}
+                    {product.relevance_score !== undefined && product.relevance_score !== null && product.relevance_score >= 70 && (
+                      <Badge className="absolute right-2.5 top-2.5 bg-zinc-900/80 text-white text-xs backdrop-blur-sm">
+                        {product.relevance_score.toFixed(0)}% match
+                      </Badge>
+                    )}
                   </div>
-                  <CardContent className="p-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-zinc-900">
-                          {product.title}
-                        </p>
-                        <p className="text-xs text-zinc-500">{product.brand} · {product.source}</p>
-                      </div>
-                    </div>
+                  <CardContent className="p-3.5">
+                    <p className="truncate text-sm font-medium text-zinc-900">
+                      {product.title}
+                    </p>
+                    <p className="mt-0.5 text-xs text-zinc-500">{product.brand}{product.source ? ` · ${product.source}` : ""}</p>
                     <div className="mt-2 flex items-center gap-2">
                       {product.price && (
                         <span className="text-sm font-semibold text-zinc-900">
@@ -281,33 +292,35 @@ export default function SearchDetail() {
                           ${product.original_price.toFixed(0)}
                         </span>
                       )}
-                      {product.is_on_sale && (
-                        <Badge className="bg-green-50 text-green-700 text-xs">On Sale</Badge>
-                      )}
                     </div>
+                    {product.match_reason && (
+                      <div className="mt-2 flex items-start gap-1.5">
+                        <Zap className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />
+                        <p className="text-xs leading-relaxed text-zinc-500">{product.match_reason}</p>
+                      </div>
+                    )}
                     {product.relevance_score !== undefined && product.relevance_score !== null && (
                       <div className="mt-2">
                         <div className="flex items-center gap-2">
-                          <div className="h-1.5 flex-1 rounded-full bg-zinc-100">
+                          <div className="h-1 flex-1 rounded-full bg-zinc-100">
                             <div
-                              className="h-1.5 rounded-full bg-zinc-900"
+                              className={`h-1 rounded-full ${
+                                product.relevance_score >= 80 ? "bg-emerald-500" : product.relevance_score >= 50 ? "bg-zinc-700" : "bg-zinc-400"
+                              }`}
                               style={{ width: `${Math.min(product.relevance_score, 100)}%` }}
                             />
                           </div>
-                          <span className="text-xs text-zinc-500">
-                            {product.relevance_score.toFixed(0)}% match
+                          <span className="shrink-0 text-xs text-zinc-400">
+                            {product.relevance_score.toFixed(0)}%
                           </span>
                         </div>
-                        {product.match_reason && (
-                          <p className="mt-1 text-xs text-zinc-400">{product.match_reason}</p>
-                        )}
                       </div>
                     )}
-                    <div className="mt-3 flex gap-1">
+                    <div className="mt-3 flex items-center gap-1">
                       {product.product_url && (
-                        <a href={product.product_url} target="_blank" rel="noopener noreferrer">
-                          <Button variant="outline" size="sm" className="gap-1 text-xs">
-                            <ExternalLink className="h-3 w-3" />View listing
+                        <a href={product.product_url} target="_blank" rel="noopener noreferrer" className="flex-1">
+                          <Button variant="outline" size="sm" className="w-full gap-1.5 text-xs">
+                            <ExternalLink className="h-3 w-3" />View deal
                           </Button>
                         </a>
                       )}
@@ -315,19 +328,19 @@ export default function SearchDetail() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleItemAction(product.id, "liked")}
-                        className="text-xs"
+                        className="shrink-0 text-xs"
                         title="Save this item"
                       >
-                        <Heart className="h-3 w-3" />
+                        <Heart className="h-3.5 w-3.5" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleItemAction(product.id, "dismissed")}
-                        className="text-xs"
+                        className="shrink-0 text-xs"
                         title="Not interested"
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </CardContent>
@@ -340,21 +353,26 @@ export default function SearchDetail() {
         <TabsContent value="alerts" className="mt-4">
           {alerts.length === 0 ? (
             <Card className="border-zinc-200/80 shadow-sm">
-              <CardContent className="flex flex-col items-center py-12">
-                <Bell className="mb-3 h-8 w-8 text-zinc-300" />
-                <p className="text-sm text-zinc-500">No alerts yet</p>
-                <p className="text-xs text-zinc-400">Alerts appear when Scout finds something notable</p>
+              <CardContent className="flex flex-col items-center py-16">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+                  <Bell className="h-5 w-5 text-zinc-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-900">No alerts for this search</p>
+                <p className="mt-1.5 max-w-xs text-center text-xs text-zinc-500">
+                  Scout will alert you when it spots price drops, new finds, sales, or restocks
+                </p>
               </CardContent>
             </Card>
           ) : (
             <div className="space-y-2">
               {alerts.map((alert) => {
-                const Icon = ALERT_ICONS[alert.alert_type] || Bell;
+                const config = ALERT_TYPE_CONFIG[alert.alert_type] || ALERT_TYPE_CONFIG.new_match;
+                const Icon = config.icon;
                 return (
-                  <Card key={alert.id} className="border-zinc-200/80 shadow-sm">
+                  <Card key={alert.id} className={`border-l-4 border-zinc-200/80 shadow-sm ${config.accent}`}>
                     <CardContent className="flex items-start gap-3 p-3">
-                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-100">
-                        <Icon className="h-4 w-4 text-zinc-600" />
+                      <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${config.bg}`}>
+                        <Icon className={`h-4 w-4 ${config.color}`} />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-medium text-zinc-900">{alert.title}</p>
@@ -383,10 +401,14 @@ export default function SearchDetail() {
         <TabsContent value="activity" className="mt-4">
           {activity.length === 0 ? (
             <Card className="border-zinc-200/80 shadow-sm">
-              <CardContent className="flex flex-col items-center py-12">
-                <Activity className="mb-3 h-8 w-8 text-zinc-300" />
-                <p className="text-sm text-zinc-500">No activity yet</p>
-                <p className="text-xs text-zinc-400">Run this search to see its history</p>
+              <CardContent className="flex flex-col items-center py-16">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100">
+                  <Activity className="h-5 w-5 text-zinc-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-900">No scan history</p>
+                <p className="mt-1.5 max-w-xs text-center text-xs text-zinc-500">
+                  Each time Scout scans for this search, you'll see the results here
+                </p>
               </CardContent>
             </Card>
           ) : (
@@ -395,7 +417,7 @@ export default function SearchDetail() {
                 <Card key={run.id} className="border-zinc-200/80 shadow-sm">
                   <CardContent className="flex items-center gap-3 p-3">
                     {run.status === "success" ? (
-                      <CheckCircle2 className="h-5 w-5 shrink-0 text-green-500" />
+                      <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
                     ) : (
                       <AlertCircle className="h-5 w-5 shrink-0 text-amber-500" />
                     )}
@@ -422,12 +444,12 @@ export default function SearchDetail() {
                         </Badge>
                       )}
                       {run.price_drops > 0 && (
-                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs">
+                        <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs">
                           {run.price_drops} price drop{run.price_drops > 1 ? "s" : ""}
                         </Badge>
                       )}
                       {run.sales > 0 && (
-                        <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200 text-xs">
+                        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
                           {run.sales} sale{run.sales > 1 ? "s" : ""}
                         </Badge>
                       )}
