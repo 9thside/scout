@@ -3,6 +3,7 @@ Monitoring service: executes saved searches, processes results,
 detects changes, creates alerts, and triggers notifications.
 """
 import datetime
+import random
 import time
 from typing import List, Optional
 from sqlalchemy.orm import Session
@@ -10,7 +11,7 @@ from app.models.saved_search import SavedSearch, SearchRunLog
 from app.models.product import Product, PriceHistory
 from app.models.alert import Alert, SearchMatch
 from app.models.user import User
-from app.services.source_adapters import get_source_adapters
+from app.services.source_adapters import get_source_adapters, MockSourceAdapter
 from app.services.scoring import compute_relevance_score
 from app.services.notifications import send_notification
 
@@ -62,6 +63,10 @@ def run_search_job(db: Session, search: SavedSearch, user: User) -> dict:
             # New product
             _handle_new_product(db, raw, search, user, stats)
 
+    # Refresh stale image URLs on ALL products linked to this search
+    # This ensures products from previous scans get updated to current image sources
+    _refresh_stale_product_images(db, search)
+
     # Update search metadata
     duration_ms = int((time.time() - start_time) * 1000)
     search.last_checked_at = datetime.datetime.utcnow()
@@ -101,6 +106,49 @@ def run_search_job(db: Session, search: SavedSearch, user: User) -> dict:
     db.commit()
 
     return stats
+
+
+def _refresh_stale_product_images(db: Session, search: SavedSearch):
+    """
+    Refresh image and product URLs for ALL products linked to this search
+    that still have outdated URLs (e.g. picsum.photos placeholders).
+    This runs after each scan to ensure old products get updated images.
+    """
+    adapter = MockSourceAdapter()
+    cat = search.category or "General"
+    cat_images = adapter.CATEGORY_IMAGES.get(cat, adapter.CATEGORY_IMAGES["General"])
+
+    # Find all products linked to this search via SearchMatch
+    matches = db.query(SearchMatch).filter(SearchMatch.search_id == search.id).all()
+    for match in matches:
+        product = db.query(Product).filter(Product.id == match.product_id).first()
+        if not product:
+            continue
+
+        # Check if product has a stale image URL (not from current Unsplash CDN source)
+        needs_image_update = (
+            not product.image_url
+            or "picsum.photos" in product.image_url
+            or "unsplash.com/photos" in product.image_url  # old broken Unsplash page URLs
+        )
+        needs_url_update = (
+            not product.product_url
+            or "example.com" in product.product_url
+            or ("google.com" not in product.product_url and "ssense.com" not in product.product_url
+                and "endclothing.com" not in product.product_url and "grailed.com" not in product.product_url
+                and "ebay.com" not in product.product_url)
+        )
+
+        if needs_image_update:
+            product.image_url = random.choice(cat_images)
+
+        if needs_url_update:
+            search_query = product.title.replace(" ", "+") if product.title else ""
+            source = product.source or ""
+            url_template = adapter.SOURCE_URLS.get(source, "https://www.google.com/search?q={query}&tbm=shop")
+            product.product_url = url_template.format(query=search_query, slug=product.title.lower().replace(" ", "-") if product.title else "")
+
+    db.commit()
 
 
 def _handle_new_product(db: Session, raw: dict, search: SavedSearch, user: User, stats: dict):
