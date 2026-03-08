@@ -93,88 +93,88 @@ class MockSourceAdapter(SourceAdapter):
     DETAILS = ["with Fur Trim", "Water-Resistant", "Made in Italy", "Japanese Selvedge", "Hand-Stitched", "Organic", "Recycled", "Gore-Tex", "Titanium Case", "Swiss Movement"]
     CONDITIONS = ["new", "new", "new", "new", "used", "refurbished"]  # Weighted toward new
 
-    # Reliable product images using picsum.photos (always-available placeholder service)
-    # Uses /id/{number} format which always works reliably
+    # Real category-specific product images from Unsplash CDN (verified working)
+    # Each category uses curated photos of actual products in that category
     CATEGORY_IMAGES = {
         "Outerwear": [
-            "https://picsum.photos/id/1/400/400",
-            "https://picsum.photos/id/10/400/400",
-            "https://picsum.photos/id/100/400/400",
-            "https://picsum.photos/id/1000/400/400",
-            "https://picsum.photos/id/1001/400/400",
-            "https://picsum.photos/id/1002/400/400",
-            "https://picsum.photos/id/1003/400/400",
-            "https://picsum.photos/id/1004/400/400",
+            "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=400&h=400&fit=crop&auto=format",  # denim jacket
+            "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop&auto=format",  # winter jacket
+            "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=400&fit=crop&auto=format",  # coat
+            "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=400&h=400&fit=crop&auto=format",  # jacket
+            "https://images.unsplash.com/photo-1548883354-94bcfe321cbb?w=400&h=400&fit=crop&auto=format",  # leather jacket
+            "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=400&h=400&fit=crop&auto=format",  # fur coat
+            "https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?w=400&h=400&fit=crop&auto=format",  # blazer
+            "https://images.unsplash.com/photo-1559551409-dadc959f76b8?w=400&h=400&fit=crop&auto=format",  # winter coat
         ],
         "Shoes": [
-            "https://picsum.photos/id/1005/400/400",
-            "https://picsum.photos/id/1006/400/400",
-            "https://picsum.photos/id/101/400/400",
-            "https://picsum.photos/id/102/400/400",
-            "https://picsum.photos/id/103/400/400",
-            "https://picsum.photos/id/104/400/400",
-            "https://picsum.photos/id/106/400/400",
-            "https://picsum.photos/id/107/400/400",
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&auto=format",  # red Nike shoe
+            "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop&auto=format",  # sneakers
+            "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400&h=400&fit=crop&auto=format",  # running shoes
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=400&fit=crop&auto=format",  # Jordan sneakers
+            "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=400&h=400&fit=crop&auto=format",  # Nike sneakers
+            "https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=400&h=400&fit=crop&auto=format",  # converse shoes
+            "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400&h=400&fit=crop&auto=format",  # white sneakers
+            "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=400&fit=crop&auto=format",  # running shoe
         ],
         "Furniture": [
-            "https://picsum.photos/id/108/400/400",
-            "https://picsum.photos/id/109/400/400",
-            "https://picsum.photos/id/11/400/400",
-            "https://picsum.photos/id/110/400/400",
-            "https://picsum.photos/id/111/400/400",
-            "https://picsum.photos/id/112/400/400",
-            "https://picsum.photos/id/113/400/400",
-            "https://picsum.photos/id/114/400/400",
+            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop&auto=format",  # sofa
+            "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&h=400&fit=crop&auto=format",  # modern furniture
+            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=400&fit=crop&auto=format",  # interior
+            "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=400&h=400&fit=crop&auto=format",  # mid century
+            "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=400&h=400&fit=crop&auto=format",  # coffee table
+            "https://images.unsplash.com/photo-1567538096621-38d2284b23ff?w=400&h=400&fit=crop&auto=format",  # furniture
+            "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&auto=format",  # living room
+            "https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&h=400&fit=crop&auto=format",  # chair
         ],
         "Watches": [
-            "https://picsum.photos/id/115/400/400",
-            "https://picsum.photos/id/116/400/400",
-            "https://picsum.photos/id/117/400/400",
-            "https://picsum.photos/id/118/400/400",
-            "https://picsum.photos/id/119/400/400",
-            "https://picsum.photos/id/12/400/400",
-            "https://picsum.photos/id/120/400/400",
-            "https://picsum.photos/id/121/400/400",
+            "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&h=400&fit=crop&auto=format",  # classic watch
+            "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=400&fit=crop&auto=format",  # luxury watch
+            "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=400&h=400&fit=crop&auto=format",  # gold watch
+            "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400&h=400&fit=crop&auto=format",  # wristwatch
+            "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=400&h=400&fit=crop&auto=format",  # watch detail
+            "https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=400&h=400&fit=crop&auto=format",  # vintage watch
+            "https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&h=400&fit=crop&auto=format",  # smart watch
+            "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=400&h=400&fit=crop&auto=format",  # dress watch
         ],
         "Bags": [
-            "https://picsum.photos/id/122/400/400",
-            "https://picsum.photos/id/123/400/400",
-            "https://picsum.photos/id/124/400/400",
-            "https://picsum.photos/id/125/400/400",
-            "https://picsum.photos/id/126/400/400",
-            "https://picsum.photos/id/127/400/400",
-            "https://picsum.photos/id/128/400/400",
-            "https://picsum.photos/id/129/400/400",
+            "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=400&fit=crop&auto=format",  # leather bag
+            "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&auto=format",  # backpack
+            "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=400&fit=crop&auto=format",  # handbag
+            "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400&h=400&fit=crop&auto=format",  # designer bag
+            "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&h=400&fit=crop&auto=format",  # leather bag
+            "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=400&h=400&fit=crop&auto=format",  # tote bag
+            "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=400&h=400&fit=crop&auto=format",  # crossbody bag
+            "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=400&h=400&fit=crop&auto=format",  # luxury bag
         ],
         "Electronics": [
-            "https://picsum.photos/id/13/400/400",
-            "https://picsum.photos/id/130/400/400",
-            "https://picsum.photos/id/131/400/400",
-            "https://picsum.photos/id/132/400/400",
-            "https://picsum.photos/id/133/400/400",
-            "https://picsum.photos/id/134/400/400",
-            "https://picsum.photos/id/135/400/400",
-            "https://picsum.photos/id/136/400/400",
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&auto=format",  # headphones
+            "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=400&fit=crop&auto=format",  # AirPods
+            "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop&auto=format",  # headphones
+            "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop&auto=format",  # electronics
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop&auto=format",  # gadgets
+            "https://images.unsplash.com/photo-1519558260268-cde7e03a0152?w=400&h=400&fit=crop&auto=format",  # speaker
+            "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=400&fit=crop&auto=format",  # tablet
+            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop&auto=format",  # laptop
         ],
         "Home Decor": [
-            "https://picsum.photos/id/137/400/400",
-            "https://picsum.photos/id/139/400/400",
-            "https://picsum.photos/id/14/400/400",
-            "https://picsum.photos/id/140/400/400",
-            "https://picsum.photos/id/141/400/400",
-            "https://picsum.photos/id/142/400/400",
-            "https://picsum.photos/id/143/400/400",
-            "https://picsum.photos/id/144/400/400",
+            "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop&auto=format",  # decor
+            "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&auto=format",  # living room
+            "https://images.unsplash.com/photo-1615529328331-f8917597711f?w=400&h=400&fit=crop&auto=format",  # vase
+            "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?w=400&h=400&fit=crop&auto=format",  # room decor
+            "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400&h=400&fit=crop&auto=format",  # bedroom
+            "https://images.unsplash.com/photo-1501127122-f385ca6ddd9d?w=400&h=400&fit=crop&auto=format",  # minimalist room
+            "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=400&fit=crop&auto=format",  # sofa
+            "https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&h=400&fit=crop&auto=format",  # chair
         ],
         "General": [
-            "https://picsum.photos/id/145/400/400",
-            "https://picsum.photos/id/146/400/400",
-            "https://picsum.photos/id/147/400/400",
-            "https://picsum.photos/id/149/400/400",
-            "https://picsum.photos/id/15/400/400",
-            "https://picsum.photos/id/150/400/400",
-            "https://picsum.photos/id/151/400/400",
-            "https://picsum.photos/id/152/400/400",
+            "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=400&fit=crop&auto=format",  # store
+            "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&h=400&fit=crop&auto=format",  # shopping
+            "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=400&fit=crop&auto=format",  # fashion
+            "https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=400&fit=crop&auto=format",  # shopping bags
+            "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=400&h=400&fit=crop&auto=format",  # product
+            "https://images.unsplash.com/photo-1560243563-062bfc001d68?w=400&h=400&fit=crop&auto=format",  # retail
+            "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400&h=400&fit=crop&auto=format",  # product display
+            "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400&h=400&fit=crop&auto=format",  # product
         ],
     }
 
